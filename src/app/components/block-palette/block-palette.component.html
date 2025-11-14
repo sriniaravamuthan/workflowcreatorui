@@ -1,0 +1,43 @@
+<div class="block-palette">
+  <div class="palette-header">
+    <h3>Workflow Blocks</h3>
+    <p class="palette-hint">Drag blocks to canvas</p>
+  </div>
+
+  <div class="palette-categories">
+    <div *ngFor="let category of categories" class="palette-category">
+      <div
+        class="category-header"
+        (click)="toggleCategory(category.id)"
+        [class.expanded]="isCategoryExpanded(category.id)"
+      >
+        <span class="category-toggle">{{ isCategoryExpanded(category.id) ? '▼' : '▶' }}</span>
+        <span class="category-name">{{ category.name }}</span>
+        <span class="category-count">({{ category.blocks.length }})</span>
+      </div>
+
+      <div *ngIf="isCategoryExpanded(category.id)" class="category-blocks">
+        <div
+          *ngFor="let block of category.blocks"
+          class="palette-block"
+          [cdkDrag]="createBlockTemplate(block.type)"
+          [style.border-left]="'4px solid ' + block.color"
+          [title]="block.description"
+        >
+          <div class="block-icon-container" [style.background-color]="block.color + '20'">
+            <span class="block-icon">{{ block.icon }}</span>
+          </div>
+          <div class="block-info">
+            <p class="block-name">{{ block.label }}</p>
+            <p class="block-desc">{{ block.description }}</p>
+          </div>
+          <span class="drag-hint">⋮⋮</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="palette-footer">
+    <p>Tip: Use the block inspector to configure each block</p>
+  </div>
+</div>

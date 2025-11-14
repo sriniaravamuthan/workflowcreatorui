@@ -1,0 +1,99 @@
+<div class="block-inspector">
+  <div *ngIf="!selectedBlock" class="inspector-empty">
+    <p class="empty-icon">📋</p>
+    <p>No block selected</p>
+    <p class="empty-hint">Click on a block in the canvas to edit its properties</p>
+  </div>
+
+  <div *ngIf="selectedBlock && blockMetadata" class="inspector-content">
+    <!-- Header -->
+    <div class="inspector-header">
+      <div class="block-type-badge" [style.background-color]="blockMetadata.color">
+        <span>{{ blockMetadata.icon }}</span>
+      </div>
+      <div class="block-info">
+        <h3>{{ blockMetadata.label }}</h3>
+        <p class="block-type-name">{{ selectedBlock.type }}</p>
+      </div>
+    </div>
+
+    <!-- Block Description -->
+    <div class="inspector-section description">
+      <p>{{ blockMetadata.description }}</p>
+    </div>
+
+    <!-- Block Label -->
+    <div class="inspector-section">
+      <label>Block Label</label>
+      <input
+        type="text"
+        class="config-input"
+        [value]="selectedBlock.label"
+        (change)="onLabelChange($event.target.value)"
+        placeholder="Enter block label"
+      />
+    </div>
+
+    <!-- Configuration Fields -->
+    <div class="inspector-section">
+      <div class="section-header">
+        <h4>Configuration</h4>
+        <button class="add-field-btn" (click)="addConfigField()" title="Add custom field">
+          +
+        </button>
+      </div>
+
+      <div *ngIf="configKeys.length === 0" class="no-config">
+        <p>No configuration options</p>
+      </div>
+
+      <div *ngFor="let key of configKeys; trackBy: trackByKey" class="config-field">
+        <div class="field-header">
+          <label [for]="'config-' + key" class="field-label">
+            {{ key }}
+            <span *ngIf="key.startsWith('field_')" class="custom-badge">Custom</span>
+          </label>
+          <button
+            *ngIf="key.startsWith('field_')"
+            class="field-remove-btn"
+            (click)="removeConfigField(key)"
+            title="Remove field"
+          >
+            ×
+          </button>
+        </div>
+
+        <input
+          [id]="'config-' + key"
+          [type]="getFieldType(key)"
+          class="config-input"
+          [value]="selectedBlock.config[key] || ''"
+          (change)="onConfigChange(key, $event.target.value)"
+          [disabled]="!isFieldEditable(key)"
+          placeholder="Enter value"
+        />
+      </div>
+    </div>
+
+    <!-- Block Metadata -->
+    <div class="inspector-section metadata">
+      <h4>Block Details</h4>
+      <div class="metadata-item">
+        <span class="metadata-label">ID:</span>
+        <span class="metadata-value">{{ selectedBlock.id }}</span>
+      </div>
+      <div class="metadata-item">
+        <span class="metadata-label">Position:</span>
+        <span class="metadata-value">X: {{ selectedBlock.position.x.toFixed(0) }}, Y: {{ selectedBlock.position.y.toFixed(0) }}</span>
+      </div>
+      <div class="metadata-item" *ngIf="selectedBlock.inputs">
+        <span class="metadata-label">Inputs:</span>
+        <span class="metadata-value">{{ selectedBlock.inputs.join(', ') }}</span>
+      </div>
+      <div class="metadata-item" *ngIf="selectedBlock.outputs">
+        <span class="metadata-label">Outputs:</span>
+        <span class="metadata-value">{{ selectedBlock.outputs.join(', ') }}</span>
+      </div>
+    </div>
+  </div>
+</div>

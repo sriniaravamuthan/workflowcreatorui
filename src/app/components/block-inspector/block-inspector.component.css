@@ -1,0 +1,277 @@
+.block-inspector {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+  border-left: 1px solid #e0e0e0;
+  overflow: hidden;
+}
+
+/* Empty State */
+.inspector-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.inspector-empty p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.empty-hint {
+  font-size: 12px;
+  color: #bbb;
+  margin-top: 12px;
+  text-align: center;
+  padding: 0 16px;
+}
+
+/* Content */
+.inspector-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.inspector-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.block-type-badge {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.block-info h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.block-type-name {
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: #999;
+  text-transform: capitalize;
+}
+
+.inspector-section {
+  margin-bottom: 20px;
+}
+
+.inspector-section.description {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.inspector-section.description p {
+  margin: 0;
+}
+
+.inspector-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* Configuration Fields */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.section-header h4 {
+  margin: 0;
+}
+
+.add-field-btn {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-field-btn:hover {
+  background: #e0e0e0;
+  border-color: #999;
+  color: #333;
+}
+
+.no-config {
+  padding: 16px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  text-align: center;
+  color: #999;
+  font-size: 12px;
+}
+
+.config-field {
+  margin-bottom: 12px;
+}
+
+.field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.field-label {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.custom-badge {
+  font-size: 10px;
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.field-remove-btn {
+  background: transparent;
+  border: none;
+  color: #999;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.field-remove-btn:hover {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.config-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.config-input:focus {
+  outline: none;
+  border-color: #2196F3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.config-input:disabled {
+  background: #f9f9f9;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* Metadata */
+.inspector-section.metadata {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.inspector-section.metadata h4 {
+  margin-bottom: 12px;
+  margin-top: 0;
+}
+
+.metadata-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 11px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.metadata-item:last-child {
+  border-bottom: none;
+}
+
+.metadata-label {
+  color: #999;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.metadata-value {
+  color: #333;
+  word-break: break-all;
+  text-align: right;
+  flex: 1;
+  font-family: 'Courier New', monospace;
+}
+
+/* Scrollbar */
+.inspector-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.inspector-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.inspector-content::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 3px;
+}
+
+.inspector-content::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}

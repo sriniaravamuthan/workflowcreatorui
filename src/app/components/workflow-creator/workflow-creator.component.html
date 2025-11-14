@@ -1,0 +1,104 @@
+<div class="workflow-creator">
+  <!-- Top Toolbar -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <div class="workflow-info">
+        <input
+          type="text"
+          class="workflow-name-input"
+          [(ngModel)]="workflowName"
+          placeholder="Workflow Name"
+          title="Enter workflow name"
+        />
+        <input
+          type="text"
+          class="workflow-desc-input"
+          [(ngModel)]="workflowDescription"
+          placeholder="Workflow Description (optional)"
+          title="Enter workflow description"
+        />
+      </div>
+    </div>
+
+    <div class="toolbar-center">
+      <span class="version-badge">v{{ workflow.version }}</span>
+    </div>
+
+    <div class="toolbar-right">
+      <button class="toolbar-btn stats-btn" (click)="toggleStats()" title="Show workflow statistics">
+        📊 Stats
+      </button>
+
+      <div class="toolbar-divider"></div>
+
+      <button class="toolbar-btn" (click)="saveWorkflow()" title="Save workflow">
+        💾 Save
+      </button>
+
+      <button class="toolbar-btn" (click)="exportWorkflow()" title="Export as JSON">
+        📥 Export
+      </button>
+
+      <button
+        class="toolbar-btn"
+        (click)="importFileInput.click()"
+        title="Import workflow from JSON"
+      >
+        📤 Import
+      </button>
+      <input
+        #importFileInput
+        type="file"
+        accept=".json"
+        (change)="importWorkflow($event)"
+        style="display: none"
+      />
+
+      <button class="toolbar-btn danger-btn" (click)="clearWorkflow()" title="Clear workflow">
+        🗑️ Clear
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Panel -->
+  <div *ngIf="showStats" class="stats-panel">
+    <div class="stat-item">
+      <span class="stat-label">Blocks:</span>
+      <span class="stat-value">{{ getWorkflowStats().blocks }}</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Connections:</span>
+      <span class="stat-value">{{ getWorkflowStats().connections }}</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Last Modified:</span>
+      <span class="stat-value">{{ getWorkflowStats().lastModified }}</span>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="main-layout">
+    <!-- Left Panel - Block Palette -->
+    <div class="left-panel">
+      <app-block-palette></app-block-palette>
+    </div>
+
+    <!-- Center - Canvas -->
+    <div class="center-panel">
+      <app-workflow-canvas
+        [workflow]="workflow"
+        (blockSelected)="onBlockSelected($event)"
+        (blockDropped)="onBlockDropped($event)"
+        (blockRemoved)="onBlockRemoved($event)"
+      ></app-workflow-canvas>
+    </div>
+
+    <!-- Right Panel - Inspector -->
+    <div class="right-panel">
+      <app-block-inspector
+        [selectedBlock]="selectedBlock"
+        (blockConfigChanged)="onBlockConfigChanged($event)"
+      ></app-block-inspector>
+    </div>
+  </div>
+</div>

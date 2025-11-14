@@ -1,0 +1,79 @@
+<div
+  class="workflow-canvas"
+  cdkDropZone
+  (drop)="onBlockDropped($event)"
+  (mousedown)="onCanvasMouseDown($event)"
+  (mousemove)="onCanvasMouseMove($event)"
+  (mouseup)="onCanvasMouseUp()"
+  (contextmenu)="$event.preventDefault()"
+  (wheel)="onCanvasWheel($event)"
+  (click)="onCanvasClick()"
+  [style.transform]="'translate(' + panX + 'px, ' + panY + 'px) scale(' + canvasScale + ')'"
+>
+  <!-- Workflow Blocks -->
+  <div class="blocks-container">
+    <div
+      *ngFor="let block of workflow.blocks"
+      class="workflow-block"
+      [class.selected]="selectedBlock?.id === block.id"
+      [style.left.px]="block.position.x"
+      [style.top.px]="block.position.y"
+      (click)="selectBlock(block, $event)"
+    >
+      <!-- Block Header with Icon and Title -->
+      <div class="block-header" [style.background-color]="getBlockColor(block.type)">
+        <span class="block-icon">{{ getBlockIcon(block.type) }}</span>
+        <span class="block-label">{{ block.label }}</span>
+        <button class="block-delete-btn" (click)="deleteBlock(block, $event)">×</button>
+      </div>
+
+      <!-- Block Content -->
+      <div class="block-content">
+        <p class="block-type">{{ block.type }}</p>
+        <div *ngIf="block.config | keyvalue as config" class="block-config">
+          <div *ngFor="let item of config" class="config-item">
+            <span class="config-key">{{ item.key }}:</span>
+            <span class="config-value">{{ item.value || 'Not set' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connection Points -->
+      <div *ngIf="block.inputs" class="input-port">
+        <div class="port-dot"></div>
+      </div>
+      <div *ngIf="block.outputs" class="output-port">
+        <div class="port-dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connections (SVG Lines) -->
+  <svg class="connections-svg" width="100%" height="100%">
+    <g>
+      <line
+        *ngFor="let connection of workflow.connections"
+        class="connection-line"
+        [attr.x1]="getBlockPosition(connection.fromBlockId)?.x + 75"
+        [attr.y1]="getBlockPosition(connection.fromBlockId)?.y + 50"
+        [attr.x2]="getBlockPosition(connection.toBlockId)?.x + 25"
+        [attr.y2]="getBlockPosition(connection.toBlockId)?.y"
+        stroke="#999"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+    </g>
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#999" />
+      </marker>
+    </defs>
+  </svg>
+
+  <!-- Canvas Info -->
+  <div class="canvas-info">
+    <p>Zoom: {{ (canvasScale * 100).toFixed(0) }}%</p>
+    <p class="hint">Right-click or Ctrl+drag to pan • Scroll to zoom</p>
+  </div>
+</div>
